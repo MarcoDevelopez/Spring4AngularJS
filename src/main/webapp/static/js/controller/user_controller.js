@@ -8,6 +8,8 @@ angular.module('myApp').controller('UserController', ['$scope', 'UserService', f
 	
 	self.submit = submit;
 	self.edit = edit;
+	self.remove = remove;
+	self.reset = reset;
 	
 	
 	fetchAllUsers();
@@ -44,11 +46,43 @@ angular.module('myApp').controller('UserController', ['$scope', 'UserService', f
 			);
 	}
 	
+	function updateUser(user, id) {
+		UserService.updateUser(user, id)
+			.then(
+					fetchAllUsers,
+					function(errResponse) {
+						console.error('Error while update User');
+					}
+			);
+	}
+	
+	function deleteUser(id) {
+		UserService.deleteUser(id)
+			.then(
+					fetchAllUsers,
+					function(errResponse) {
+						console.error('Error while deleting User');
+					}
+			)
+	}
+	
 	function submit() {
 		if (self.user.id === null) {
 			console.log('Saving New User', self.user);
 			createUser(self.user);
+		} else {
+			updateUser(self.user, self.user.id);
+			console.log('User udpate with id ', self.user.id);
 		}
+		reset();
+	}
+	
+	function remove(id) {
+		console.log('id to be deleted ', id);
+		if (self.user.id === id) { // clean form if the user to be deleted is shown there.
+			reset();
+		}
+		deleteUser(id);
 	}
 	
 	function reset() {

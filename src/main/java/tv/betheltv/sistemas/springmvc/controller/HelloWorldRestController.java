@@ -61,5 +61,39 @@ public class HelloWorldRestController {
 		headers.setLocation(prmBuilder.path("/user/{id}").buildAndExpand(prmUser.getId()).toUri());
 		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 	}
+	 
+	// Update User
+	@RequestMapping(value = "/user/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<User> updateUser(@PathVariable("id") long id, @RequestBody User prmUser) {
+		System.out.println("UPDATING USER " + id);
+		User currentUser = userService.findById(id);
+		
+		if (currentUser == null) {
+			System.out.println("USER WITH ID " + id + " NOT FOUND");
+			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+		}
+		
+		currentUser.setUsername(prmUser.getUsername());
+		currentUser.setAddress(prmUser.getAddress());
+		currentUser.setEmail(prmUser.getEmail());
+		
+		userService.updateUser(prmUser);
+		return new ResponseEntity<User>(currentUser, HttpStatus.OK);
+	}
+	
+	// Delete a User
+	@RequestMapping(value = "/user/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<User> deleteUser(@PathVariable("id") long id) {
+		System.out.println("FETCHING & DELETING USER WITH ID " + id);
+		
+		User user = userService.findById(id);
+		if (user == null) {
+			System.out.println("UNABLE TO DELETE. USER WITH ID " + id + " NOT FOUND");
+			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+		}
+		
+		userService.deleteUserById(id);
+		return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
+	}
 	
 }
