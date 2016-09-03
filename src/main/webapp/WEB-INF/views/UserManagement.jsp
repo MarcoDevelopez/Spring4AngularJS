@@ -29,6 +29,11 @@
 	</style>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 	<link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+	<script src="<c:url value='/static/js/app.js' />"></script>
+	<script src="<c:url value='/static/js/service/user_service.js' />"></script>
+	<script src="<c:url value='/static/js/controller/user_controller.js' />"></script>
+	
 </head>
 <body ng-app="myApp" class="ng-cloak">
 	<div class="generic-container" ng-controller="UserController as ctrl">
@@ -144,11 +149,6 @@
 			</div>
 		</div>
 	</div>
-	
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
-	<script src="<c:url value='/static/js/app.js' />"></script>
-	<script src="<c:url value='/static/js/service/user_service.js' />"></script>
-	<script src="<c:url value='/static/js/controller/user_controller.js' />"></script>
 	
 </body>
 </html>
